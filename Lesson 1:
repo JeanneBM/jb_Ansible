@@ -1,0 +1,114 @@
+1.1 Understanding Ansible
+
+			CMS
+		       ------
+
+	    |				|
+----------- |		ssh		|
+| control | | ----------------------->	| 
+----------- |				|Comp1
+| Ansible | |		Playbook	|
+----------- | ----------------------->	|
+            |----------------------------
+	    | ----------------------->	|Comp2
+	    |				|--------------------------------
+	    |		Playbook	|	Python			|
+	    | ----------------------->	|----------------------->	|Comp3
+	    | ----------------------->	|----------------------->	|Comp4
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+1.2 Host Requirements 
+
+
+	EPEL:					sudo      Comp1
+	* ssh-keygen				ansible
+	* USER
+	* ansible				sudo	  Comp2
+						python
+	Control:				ansible
+	* python
+	* ansible
+						sudo	  Comp3
+		/etc/hosts IP-addr.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+1.3 Installing Ansible on the Control Node
+
+Installing Ansible:
+* Ansible can be installed from the repositories or using the Python pip installer
+* In this procedure we'll discuss Python pip as well as the repositories method
+
+Using Python pip to Install Ansible:
+1. On control.example.com: yum install python3
+2. yum -y install python3-pip
+3. alternbatives --set python /usr/bin/python3
+4. su -ansible; pip3 install ansible --user
+5. ansible --version
+
+Installing Ansible from the Repositories:
+1. On the control node: use subscription-manager repos --list to verify the name of the latest avaliable repository
+2. Use subscription-manager repos --enable=ansible-2-for-rhel-8-x86_64-rpms to enable the repository
+3. Use yum install ansible to install the Ansible3 software
+4. ansible --version to verify
+5. On managed nodes: yum install python3
+
+If using Centos8:
+* On Centos 8, the Ansible software is expected to be avaliable from the EPEL repository
+* Use yum install -y epel-release to make this repository avaliable
+* Use yum install python3 ansible to install the ansible software
+
+Setting up the Required Environment:
+* After installing Ansible, you'll need to set up a dedicated Ansible user account:
+1. On all nodes: useradd ansible
+2. echo password | passwd --stdin ansibleyt
+3. echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+4. On control.example.com: su - ansible; ssh-keygen
+5. ssh-copy-id ansible1.example.com; ssh-copy-id ansible2.example.com
+
+
+subscription-manager repos --list
+subscription-manager repos --enable=ansible-2-for-rhel-8-x86_64-rpms
+yum instrall -y ansible
+ansible --version
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+1.4 Preparing Managed Nodes
+
+* Ansible needs a dedicated non-root user account with sudo privileges that can SSH into the managed nodes without entering a password 
+* In this course we'll use an account with the name ansible to do so
+* To set up this account, the following steps have already been completed:
+	* useradd ansible
+	* echo "password" | passwd --stdin ansible
+	* echo "ansible ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/ansible
+
+* On the control host, generate an SSH key and copy over to managed nodes:
+	* ssh-keygen
+	* ssh-copy-id ansible1.example.com	
+
+* Install Python3
+	* yum install python3
+	* alternatives --set python /usr/bin/python3
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+1.5 Verifying Ansible Installation
+
+* As user ansible, type ansible --version
+* Further verification is not possible yet, as additional settings need to be done
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
