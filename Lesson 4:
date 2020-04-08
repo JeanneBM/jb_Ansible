@@ -1,0 +1,126 @@
+4.1 Using YAML to Write Playbooks
+
+yaml:
+
+------
+-name
+  ------
+  task:
+  -name:
+  module:
+     arg1
+     arg2
+  -name:
+  ------
+-name2
+  ------
+  task:
+  -name:
+  module
+  	...
+
+------ parameters
+
+
+Why Playbooks?
+* Ad-hoc commands can be used to run one or a few tasks
+* Ad-hoc commands are convenient to test or when a complete managed infrastructure hasn't been set up yet
+* Ansible Playbooks are used to run multiple tasks against managed hosts in a scripted way
+* In Playbooks, one or multiple plays are started:
+	* Each play runs one or more tasks 
+	* In these tasks, different modules are used to perform the actual work
+* Playbooks are written in YAML and have the .yml or .yaml extension
+
+Understanding YAML:
+* YAML is Yet Another Markup Language according to some
+* According to others it stands for YAML Ain't Markup Language
+* Anyway, it's an easy-to-read format to structure tasks/items that need to be created 
+* In YAML files, items are using indentation with white spaces to indicate the structure of data
+* Data elements at the same level should have the same indentation 
+* Child items are indented more than the parent items
+* There is no strict requirement about the amount of spaces that should be used, but 2 is common
+
+Writing Your First Playbook
+
+---
+- name: deploy vsftpd
+  hosts: ansible2.example.com
+  tasks:
+  - name: install vsftpd
+    yum: name=vsftpd
+  - name: enable vsftpd 
+    service: name=vsftpd anabled=true
+  - name: create readme file
+    copy:
+      content: "free downloads for everybody"
+      dest: /var/ftp/pub/README
+      force: no
+      mode: 0444
+...
+
+Running Your First Playbook:
+* Use ansible-playbook vsftpd.yml to run the playbook 
+* Notice that a successful run requires the inventory and become parameters to be set correctly and also requires access to an inventory file
+* The output of the ansible-playbook command will show what exactly has happened 
+* Playbooks in general are idempotent, which means that running the same playbook again should lead to the same result
+* Notice there is no easy way to undo changes made by a playbook
+
+
+ansible-playbook vsftpd.yml
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+4.2 Verifying Playbook Syntax 
+
+Optimizing vim for YAML:
+* In ~/.vimrc, include the following setting:
+	* autocmd FileType yaml setlocal ai ts=2 sw=2 et
+
+Verifying Playbook Syntax:
+* ansible-playbook --syntax-check vsftpd.yml will perform a syntax check
+* Use -v[vvv] to increase output verbosity:
+	* -v will show task results
+	* -vv will show task results and task configuration
+	* -vvv also shows information about connections to managed hosts
+	* -vvvv adds information about plug-ins, users used to run scripts and names of scripts that are executed
+* Use the -C option to perform a dry run
+
+
+ansible-playbook --syntax-check vsftpd-err.yml
+vim vsftpd-err.yml
+ansible-playbook -C vsftpd.yml
+ansible-playbook -vvvv vsftpd.yml
+ansible-playbook -vv vsftpd.yml
+vim ~/.vimrcx 
++"autocmd FileType yaml setlocal ai ts=2 sw=2 et"
+vim test.yaml 
++"
+---
+- name: mytest
+  hosts: all
+  task: 
+  - name: task1"
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+4.3 Writing Multiple-Play Playbooks
+
+Understanding Plays:
+* A play is a series of tasks that are executed against selected hosts from the inventory, using specific credentials 
+* Using mulyiple plays allows running tasks on different hosts, using different credentials from the same playbook
+* Within a play definition, escalation parameters can be defined:
+	* remote_user: the name of the remote user
+	* become: to enable or disable privilege escalation
+	* become_method: to allow using an alternative escalation solution
+	* become_user: the target user used for privilege escalation
+
+
+vim web-setup-and-test.yml
+ansible-playbook --syntax-check web-setup-and-test.yml
+ansible-playbook -v web-setup-and-test.yml
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
