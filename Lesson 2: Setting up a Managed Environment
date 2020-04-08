@@ -47,4 +47,75 @@ ansible all --list-hosts
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
-2.2 
+2.2 Understanding Dynamic Inventory
+
+* Dynamic inventory can be used to discover inventory in dynamic environments such as cloud 
+* Many community-provided dynamic inventory scripts are avaliable
+* These scripts are referred to in the same way as static inventory, but must have the execute permission set
+* Alternatively, it's relatively easy to write your own dynamic inventory
+
+
+ls
+vim pascal.py
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+2.3 Understanding Ansible Configuration Files
+
+Understanding ansible.cfg
+* Settings in ansible.cfg are organized in two sections 
+	* [defaults] sets default settings
+	* [privilege_escalation] specifies how Ansible runs commands on managed hosts
+
+* The following settings are used:
+	* inventory specifies the path to the inventory file
+	* remote_user is the name of the user that logs in on the remote hosts
+	* ask_pass specifies whether or not to prompt for a password 
+	* become indicates if you want to automatically switch to the become_user
+	* become_method sets how to become the other user 
+	* become_user specifies the target remote user
+	* become_ask_pass sets if a password should be asked for when escalating
+
+Connecting to the Remote Hosts:
+* The default protocol to connect to the remote host is SSH:
+	* Key based authentication is the common approach, but password based authentication is possible as well
+	* Use ssh-keygen to generate a public/private SSH key pair and next use ssh-copy-id to copy the public key over to the managed hosts
+
+* Other connection methods are avaliable, to manage Windows for instance, use ansible_connection: winrm and set ansible_port:5986
+
+Escalating Privileges:
+* sudo is the default mechanism, su can also be used but is uncommon
+* A password can be asked for, but it's common to do password-less escalation
+* To setup password-less sudo, create a snapin file in /etc/sudoers.d/ with the following contents:
+	* ansible ALL=(ALL) NOPASSWD:ALL
+	
+Understanding Localhost Connections:
+* Ansible has an implicit localhost entry to run Ansible commands on the localhost
+* When connecting to localhost, the default become settings are not used, but the account that ran the Ansible command is used
+* Ensure this account has been configured with the appropriate sudo privileges
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+2.4 Managing Ansible Configuration Files
+
+Managing ansible.cfg:
+* The ansible.cfg file is considered in order of precedence:
+	* /etc/ansible/ansible.cfg
+	* ~/.ansible.cfg if exists will overwrite the default
+	* ./ansible.cfg is the configuration file in the current Ansible project directory and it will always have precedence if it exists
+
+* Alternatively, if a variable ANSIBLE_CONFIG exists to refer to a specific config file, this will always have precedence
+* Use ansible --version to find which configuration file currently is used
+
+
+ansible --version
+pwd
+ls
+cd ..
+ls
+ansible --version
+ls -l /etc/anacrontab
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
