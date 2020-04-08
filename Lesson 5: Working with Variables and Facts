@@ -1,0 +1,67 @@
+5.1 Understanding Variables
+
+
+ FAST			Redhat 			Ubuntu			Playbook
+------			variables		variables		variables
+* mem						* inventory		static
+* cpu's 					* include		* conditionals 
+						* local fact		* package -{{webserver}}
+
+Understanding Variables:
+* A variable is a label that is assigned to a specific value to make it easy to refer to that value throughout the playbook
+* Variables can be defined by administrators at different levels
+* A fact is a special type of variable, that refers to a current state of an Ansible managed system 
+* Variables are particularly useful when dealing with managed hosts where specifics are different:
+	* Set a variable web_service on Ubuntu and Red Hat
+	* Refer to the variable web_service instead of the specific service name  
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+5.2 Using Variables 
+
+Variables can be set at different levels
+	* In a playbook
+	* In inventory (deprecated)
+	* In inclusion files
+
+Variable names have some requirements
+	* The name must start with a letter
+	* Variable names can only contain letters, numbers and underscores
+
+Defining Variables:
+* Variables can be defined in a vars block in the beginning of a playbook
+
+- hosts: all
+  vars:
+    web_package: httpd
+
+* Alternatively, variables can be definded in a variable file, which will be included from the playbook
+
+- hosts: all
+  vars_files:
+    - vars/users.yml
+
+Using Variables:
+* After defining the variables, it can be used later in the playbook
+* Notice that order does matter!
+* Refer to a variable as {{web_package}} 
+* In conditional statements (discussed later), no curly braces are needed to refer to variable values:
+	* when: "'not found' in command_result.err"
+	* {% if ansible_facts['devices']['sdb'] is defined}
+	     Secondary disk size: {{ansible_facts['devices']['sdb']['size']}}
+* If the variable is the first element, using quotes is mandatory!
+
+vim user.yml
+ansible-playbook user.yml
+ansible -m shell -a "grep lisa /etc/passwd"
+ansible all -m shell -a "grep lisa /etc/passwd"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
