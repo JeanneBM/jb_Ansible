@@ -42,24 +42,24 @@ in a fixed directory structure that, as such, can easily be included from a play
 variables that should be set in the role
 
 Understanding Roles Default Structure:
-* defaults contains default values of role variables. If varaibles are set at the play level as well, these default values are overwritten
+* defaults contains default values of role variables. If variables are set at the play level as well, these default values are overwritten
 * files my contain static files that are needed from the role tasks
 * handlers has a main.yml taht defines handlers used in the role
 * meta has a main.yml that may be used to include role metadata, such as information about author, license, dependencies and more
 * tasks contains a main.yml that defines the role task definitions
 * templates is used to store Jinja2 templates
 * tests may contain an optional inventory file, as well as a test.yml playbook that can be used to test the role
-* vars may contain a main.yml with standard variables for the role (which are not meant to be overwritten by playbook varaibles)
+* vars may contain a main.yml with standard variables for the role (which are not meant to be overwritten by playbook variables)
 
 Understanding Role Variables:
 * Variables can be defined at different levels in a role
 * vars/main.yml has the role default variables, which are used in default role functioning. They are not intended to be overwritten 
-* defaults/main.yml can contain dafault variables. These have a low precedence and can be overwritten by varaibles with the same name 
+* defaults/main.yml can contain dafault variables. These have a low precedence and can be overwritten by variables with the same name 
 that are set in the playbook and which have higher precedence
-* Playbook varaibles will always overwrite the varaibles as set in the role. Site-specific varaibles such as secrets and vault encrypted 
+* Playbook variables will always overwrite the variables as set in the role. Site-specific variables such as secrets and vault encrypted 
 data should always be managed from the playbook, as role variables are intended to be generic
-* Role varaibles are defined in the playbook when calling the role and they have the highest precedence and overwrite playbook varaibles 
-as well as inventory varaibles
+* Role variables are defined in the playbook when calling the role and they have the highest precedence and overwrite playbook variables 
+as well as inventory variables
 
 Understanding Role Location:
 * Roles can be obtained in many ways:
@@ -84,7 +84,7 @@ Using Roles in a Playbook:
     - role1
 	- role2
 	
-* When calling a role, role varaibles can be defined
+* When calling a role, role variables can be defined
 
 ---
 - name: role variable demo
@@ -118,3 +118,6 @@ ansible-playbook nginx-role.yml
 
 8.4 Using the Ansible Galaxy Command Line Tool
 
+
+
+	
