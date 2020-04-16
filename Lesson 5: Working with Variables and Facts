@@ -58,8 +58,6 @@ ansible all -m shell -a "grep lisa /etc/passwd"
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
------------------------------------------------------------------------------------------------------------------------------------------------
-
 5.3 Understanding Variable Precedence
 
 Understanding Variable Scope:
@@ -172,10 +170,106 @@ vim multi-dictionary.yml
 ansible-playbook multi-dictionary.yml
  
 -----------------------------------------------------------------------------------------------------------------------------------------------
+5.6 Using Ansible Vault 
 
-5.6 Using Ansible Vault
+Dealing with Sensitive Data:
+* Some modules require sensitive data to be processed
+* This may include webkeys, passwords and more
+* To process sensitive data in a secure way, Ansible Vault can be used
+* Ansible Vault is used to encrypt and decrypt files
+
+Creating an Encrypted File:
+* To create an encrypted file, use: ansible-vault create playbook.yml
+* This command will prompt for a new vault password and opens the file in vi for further editing 
+* As an alternative for entering passwords on the prompt, a vault password file may be used, but you’ll have to make sure this file is protected in another way: ansible-vault create --vault-password-file=vault-pass playbook.yml
+* To view a vault encrypted file, use: ansible-vault view playbook.yml
+* To edit, use ansible-vault edit playbook.yml
+* Use ansible-vault encrypt playbook.yml to encrypt an existing file and use: ansible-vault decrypt playbook.yml to decrypt it
+* To change a password on an existing file use: ansible-vault rekey
+
+Using Playbooks with Vault:
+* To run a playbook that accesses Vault encrypted files, you need to use the -vault-id @prompt option to be prompted for a password
+* Alternatively, you can store the password as a single-line string in a password file and access that using the: --vault-password-file=vault-file option
+
+Managing Vault Files:
+* When setting up projects with Vault encrypted files, it makes sense to use separate files to store encrypted and non-encrypted variables
+* To store host or host-group related variable files, you can use the following structure:
+|-group_vars
+|  |--dbservers
+|    |-vars
+|    |-vault
+
+* This replaces the solution that was discussed earlier, where all variables are stored in a file with the name of the host or host group
 
 
+vim create-user.yml
+ansible-vault create secret.yml
+cat secret.yml
+ansible-playbook --ask-vault-pass create-user.yml
+echo password > vault-pass
+cat vault-pass
+ls -l
+chmod 600 vault-pass
+ansible-playbook --vault-password-file=vault-pass create-user.yml
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+5.7 Working with Facts
+
+Understanding Ansible Facts:
+* Ansible facts are variables that are automatically set and discovered by Ansible on managed hosts
+* Facts contain information about hosts that can be used in conditionals
+* For instance, before installing specific software you can check that a managed host runs a specific kernel version
+
+Managing Fact Gathering:
+* By default, all playbooks perform fact gathering before running the actual plays
+* You can run fact gathering in an ad hoc command using the setup module 
+* To show facts, use the debug module to print value of the ansible_facts variable
+* Notice that in facts, a hierarchical relationship is shown where you can use the dotted format to refer to a specific fact 
+
+Displaying Fact Names:
+* In Ansible 2.4 and before, Ansible facts were stored as individual variables, such as: ansible_hostname and ansible_interfaces.
+* In Ansible 2.5 and later, all facts are stored in one variable with the name ansible_facts and referring to specific facts happens in a different way: ansible_facts[‘host_name’] and ansible_facts[‘interfaces’]
+* The old approach is referred to as “injecting facts as variables” and this behavior can be managed through the inject_facts_as_vars parameter
+
+Turning off Fact Gathering:
+* Disabling fact gathering may seriously speed up playbooks
+* Use: gather_facts: no in the play header to disable
+* Even if fact gathering is disabled, it can be enabled again by running the setup module in a task
+
+
+ansible -m setup all
+vim facts/facts.yml
+ansible-playbook facts/facts.yml
+vim facts/ipfact.yml
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+5.8 Creating Custom Facts
+
+Using Custom Facts:
+* Custom facts allow administrators to dynamically generate variables which are stored as facts
+* Custom facts are stored in an ini or json file in the /etc/ansible/facts.d directory on the managed host:
+    * The name of these files must end in .fact
+* Custom facts are stored in the ansible_facts.ansible_local variable
+* Use: ansible hostname -m setup -a “filter=ansible_local” to display local facts
+* Notice how fact filename and label are used in the fact
+
+Custom Facts Example File:
+
+[localfacts]
+package = vsftpd
+service = vsftpd
+state = started
+
+
+cd facts
+cat newlocalfacts.yml
+cat localfacts.fact
+ansible-playbook newlocalfacts.yml
+^A
+ansible all -m setup -a “filter=ansible_local” 
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
