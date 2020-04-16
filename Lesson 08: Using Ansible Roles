@@ -5,9 +5,9 @@
 			inventory-prod
 			site.yml
 			lamp.yml ------------------> * ~/.ansible/roles/nginx
-										 * ~/.ansible/roles/httpd				
+						     * ~/.ansible/roles/httpd				
 			file.yml ------------------> * ~/.ansible/roles/samba
-										 * ~/.ansible/roles/nfs
+						     * ~/.ansible/roles/nfs
 			group-vars/lamp
 					  /file
 			host_vars
