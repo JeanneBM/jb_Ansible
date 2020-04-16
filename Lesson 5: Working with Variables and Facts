@@ -181,7 +181,8 @@ Dealing with Sensitive Data:
 Creating an Encrypted File:
 * To create an encrypted file, use: ansible-vault create playbook.yml
 * This command will prompt for a new vault password and opens the file in vi for further editing 
-* As an alternative for entering passwords on the prompt, a vault password file may be used, but you’ll have to make sure this file is protected in another way: ansible-vault create --vault-password-file=vault-pass playbook.yml
+* As an alternative for entering passwords on the prompt, a vault password file may be used, but you’ll have to make sure this file 
+is protected in another way: ansible-vault create --vault-password-file=vault-pass playbook.yml
 * To view a vault encrypted file, use: ansible-vault view playbook.yml
 * To edit, use ansible-vault edit playbook.yml
 * Use ansible-vault encrypt playbook.yml to encrypt an existing file and use: ansible-vault decrypt playbook.yml to decrypt it
@@ -189,7 +190,8 @@ Creating an Encrypted File:
 
 Using Playbooks with Vault:
 * To run a playbook that accesses Vault encrypted files, you need to use the -vault-id @prompt option to be prompted for a password
-* Alternatively, you can store the password as a single-line string in a password file and access that using the: --vault-password-file=vault-file option
+* Alternatively, you can store the password as a single-line string in a password file and access that using the: 
+	--vault-password-file=vault-file option
 
 Managing Vault Files:
 * When setting up projects with Vault encrypted files, it makes sense to use separate files to store encrypted and non-encrypted variables
@@ -229,8 +231,10 @@ Managing Fact Gathering:
 
 Displaying Fact Names:
 * In Ansible 2.4 and before, Ansible facts were stored as individual variables, such as: ansible_hostname and ansible_interfaces.
-* In Ansible 2.5 and later, all facts are stored in one variable with the name ansible_facts and referring to specific facts happens in a different way: ansible_facts[‘host_name’] and ansible_facts[‘interfaces’]
-* The old approach is referred to as “injecting facts as variables” and this behavior can be managed through the inject_facts_as_vars parameter
+* In Ansible 2.5 and later, all facts are stored in one variable with the name ansible_facts and referring to specific facts happens 
+in a different way: ansible_facts[‘host_name’] and ansible_facts[‘interfaces’]
+* The old approach is referred to as “injecting facts as variables” and this behavior can be managed through the inject_facts_as_vars 
+parameter
 
 Turning off Fact Gathering:
 * Disabling fact gathering may seriously speed up playbooks
