@@ -61,4 +61,166 @@ ansible-playbook loopusers.yml
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
+6.2 Using Register Variables with Loops 
+
+Understanding register:
+* A register is used to store the output of a command and address it as a variable
+* You can next use the result of the command in a conditional or in a loop
+
+vim register_loop.yml
+ansible-playbook register_loop.yml
+vim register_command.yml
+ansible-playbook register_command.yml
+
+--------------------------------------------------------------------------------------------------------------
+
+6.3 Using when to Run Tasks Conditionally
+
+Using Conditions:
+* when statements are used to run a task conditionally
+* A condition can be used to run a task only if specific conditions are true
+* Playbook variables, registered variables and facts can be used in conditions and make sure that tasks only run if specific conditions are true
+* For instance, check if a task has run successfully, a certain amount of memory is avaliable, a file exist, etc.
+
+Defining Simple Conditions:
+* The simplest example of a condition is to check whether a Boolean variable is true or false
+* You can also check and see if a non-Boolean variable has a value and use that value in the conditional
+* Or use a conditional in which you compare teh value of a fact to the specific value of a variable
+
+Examples: 
+
+* ansible_machine == "x86_64"
+* ansible_distribution_major_version == "8"
+* ansible_memfree_mb == 1024
+* ansible_memfree_mb <256
+* ansible_memfree_mb >256
+* ansible_memfree_mb <=256
+* ansible_memfree_mb !=512
+* my_variable is defined
+* my_variable is not defined
+* my_variable
+* ansible_distribution is supported_distros
+
+
+vim distro.yml
+ansible-playbook distro.yml
+" supported distros:
+	- RedHat ->> Ubuntu
+  tasks:
+    name: nginx"
+
+--------------------------------------------------------------------------------------------------------------
+
+6.4 Testing Multiple Conditions 
+
+Testing Multiple Conditions:
+* when can be used to test multiple conditions as well
+* Use "and" or "or" and group the conditions with parentheses:
+	* when: ansible_distribution == "CentOS" or
+	  ansible_distribution == "RedHat"
+	* when: ansible machine == "x86_64" and ansible_distribution == "CentOS"
+* The when keyword also support a list and when using a list all of the conditions must be true
+* Complex conditional statements can group conditions using parentheses
+
+Combining Loops and Conditionals:
+* Loops and conditionals can be combined 
+* For instance, you can iterate through a list of dictionaries and apply the conditional statement only if a dictionary is found that matches the condition
+
+
+vim when_multiple.yml
+ansible-playbook when_multiple.yml
+vim restart.yml
+ansible-playbook -v restart.yml
+ansible ansible2.example.com -m command -a "systemctl status crond"
+ansible ansible2.example.com -m command -a "systemctl start crond"
+ansinble-playbook restart.yml
+
+--------------------------------------------------------------------------------------------------------------
+
+6.5 Using Handlers 
+
+Understanding Handlers:
+* Handlers allow you to configure playbooks in a way that one task will only run if another task has been running successfully
+* In order to run the handler a notify statement is used from the main task to trigger tha handler
+* Handlers typically are used to restart services or reboot hosts
+* Handlers are executed after runningall tasks in a play
+* Handlers will only run if a task has changed something, so if an ok result instead of a changed result is reported, the handler will not run
+* If one of the tasks fails, tha handler will not run, but this may be overwritten using force_handlers: True
+* One task may trigger more than one handler
+
+
+vim handlers.yml
+ansible-playbook handlers.yml
+
+--------------------------------------------------------------------------------------------------------------
+
+6.6 Using Blocks
+
+Understanding Ansible Blocks:
+* A block is a logical group of tasks
+* It can be used to control how tasks are executed
+* One block can, for instance, be enabled using a single when
+* Blocks can also be used in error condition handling 
+	* Use block to define the main tasks to run
+	* Use rescue to define tasks that run if tasks defined in the block fail
+	* Use always to define tasks that will run, regardless of the success or failure of the block and rescue tasks
+* Notice that items cannot be used on blocks
+
+
+vim blocks.yml
+ansible-playbook blocks.yml
+vim blocks2.yml
+ansible ansible2.example.com -m file -a "path=/var/www/html/index.html state=touch"
+ansible-playbook blocks2.yml
+
+--------------------------------------------------------------------------------------------------------------
+
+6.7 Dealing with Failures
+
+Understanding Failure Handling:
+* Ansible looks at the exit status of a task to determine whether it has failed 
+* When any task fails, Ansible aborts that rest of the play on that host and continues with the next host
+* Different solutions can be used to change that behavior
+* Use ignore_errors in a task to ignore failures
+* Use force_handlers to force a handler that has been triggered to run, even if (another) task fails
+
+Defining Failure States:
+* As Ansible only looks at the exit status of a failed task, it may think a task was successful where that is not the case
+* To be more specific, use failed_when to specify what to look for in command output to recognize a failure
+
+Using the fail Module:
+* The failed_when keyword can be used in a task to identify when a task has failed
+* The fail module can be used to print a message that informs why a task has failed 
+* To use failed_when or fail, the result of the command must be registered and the registered variable output must be analyzed
+* When using the fail module, the failing task must have ignore_errors set to yes
+
+
+vim failure.yml
+ansible-playbook failure.yml
+vim failure2.yml
+ansible-playbook failure2.yml
+
+--------------------------------------------------------------------------------------------------------------
+
+6.8 Managing Changed Status
+
+Handling Changed Status:
+* Managing the changed status may be important, as handlers trigger on the changed status
+* The result of a command can be registered and the registered variable can be scanned for specific text to determine that a change has occurred
+* This allows Ansible to report a hanged status, where it normally would not, thus allowing handlers to be triggered
+* Using changed_when is usable in two cases:
+	* to allow handlers to run when a change would not normally trigger
+	* to disable commands that run successful to report a changed status
+	
+
+vim changed.yml
+ansible-playbook changed.yml
+
+--------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
 
