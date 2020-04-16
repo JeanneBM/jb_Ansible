@@ -1,1 +1,120 @@
+8.1 Understanding Directory Structure Best Practices 
+
+~/myproject/ansible.cfg
+			inventory-dev
+			inventory-prod
+			site.yml
+			lamp.yml ------------------> * ~/.ansible/roles/nginx
+										 * ~/.ansible/roles/httpd				
+			file.yml ------------------> * ~/.ansible/roles/samba
+										 * ~/.ansible/roles/nfs
+			group-vars/lamp
+					  /file
+			host_vars
+			
+Organizing Ansible Contents:
+* When working with Ansible, it's recommended to use project directories so that contents can be organized in a consistent way
+* Each project directory may have its own ansible.cfg, inventory as well as playbooks 
+* If the directory grows bigger, variable files and other include files may be used
+* And finally, roles can be use to standardize and easily re-use specific parts of Ansible
+* For now, consider a role a complete project dedicated to a specific task that is going to be included in the main playbook
+
+Directory Layout Best Practices:
+* Ansible Documentation describes best practices
+  (https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html)
+  
+* Some highlights:
+	* On top in the directory, use site.yml as the master playbook
+	* From site.yml, call specific playbooks for specifictypes of host (webservers.yml, dbservers.yml, etc.)
+	* Consider using different inventory files to differentiate between production and staging phases 
+	* Use groups_var/ and host_vars/ to set host related variables
+	* Use roles to standardize common tasks
+	
+-----------------------------------------------------------------------------------------------------------------------------------------------
+ 
+8.2 Understanding Ansible Roles
+
+Understanding Roles:
+* Ansible Playbooks can be very similar: code used in one playbook can be useful in other playbooks also
+* To make it easy to re-use code, roles can be used. A role is a collection of tasks, variables, files, templates and other resources 
+in a fixed directory structure that, as such, can easily be included from a playbook
+* Roles should be written in a generic way , such that play specific can be defined as variables in the play and overwrite the dafault 
+variables that should be set in the role
+
+Understanding Roles Default Structure:
+* defaults contains default values of role variables. If varaibles are set at the play level as well, these default values are overwritten
+* files my contain static files that are needed from the role tasks
+* handlers has a main.yml taht defines handlers used in the role
+* meta has a main.yml that may be used to include role metadata, such as information about author, license, dependencies and more
+* tasks contains a main.yml that defines the role task definitions
+* templates is used to store Jinja2 templates
+* tests may contain an optional inventory file, as well as a test.yml playbook that can be used to test the role
+* vars may contain a main.yml with standard variables for the role (which are not meant to be overwritten by playbook varaibles)
+
+Understanding Role Variables:
+* Variables can be defined at different levels in a role
+* vars/main.yml has the role default variables, which are used in default role functioning. They are not intended to be overwritten 
+* defaults/main.yml can contain dafault variables. These have a low precedence and can be overwritten by varaibles with the same name 
+that are set in the playbook and which have higher precedence
+* Playbook varaibles will always overwrite the varaibles as set in the role. Site-specific varaibles such as secrets and vault encrypted 
+data should always be managed from the playbook, as role variables are intended to be generic
+* Role varaibles are defined in the playbook when calling the role and they have the highest precedence and overwrite playbook varaibles 
+as well as inventory varaibles
+
+Understanding Role Location:
+* Roles can be obtained in many ways:
+	* You can write your own roles
+	* For Red Hat Enterprise Linux, the rhel-system-roles package is avaliable
+	* The community provides roles through the Ansible Galaxy website
+* Roles can be stored at a default location and from there can easily be used from playbooks:
+	* ./roles has highest precedence
+	* ~/.ansible/roles is checked after that
+	* /etc/ansible/roles is checked next
+	* /usr/share/ansible/roles is checked last
+
+
+Using Roles in a Playbook:
+* Roles are reffered to from playbooks
+* When roles are used, they will run before any task that is defined in the playbook 
+
+---
+- name: role demo
+  hosts: all
+  roles: 
+    - role1
+	- role2
+	
+* When calling a role, role varaibles can be defined
+
+---
+- name: role variable demo
+  hosts: all
+  roles: 
+    - role: role1
+	- role: role2
+	  var1: cow
+	  var2: goat
+	  
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+8.3 Using Ansible Galaxy for Standard Roles
+
+Using Ansible Galaxy:
+* Administrators can define their own roles or standard roles can be used from Ansible Galaxy
+* Ansible Galaxy is a public website where community provided roles are offered 
+* Before writing your own roles, check Galaxy, you may get the roles from there
+* An easy-to-use search interface is avaliable at galaxy.ansible.com
+
+
+ansible-galaxy install geerlingguy.nginx
+vim main.yml
+cd geerlingguy.nginx
+cd geerlingguy.nginx/tasks
+vim setup-RedHat.yml
+vim nginx-role.yml
+ansible-playbook nginx-role.yml
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+8.4 Using the Ansible Galaxy Command Line Tool
 
