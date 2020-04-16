@@ -58,7 +58,122 @@ ansible all -m shell -a "grep lisa /etc/passwd"
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
 
+-----------------------------------------------------------------------------------------------------------------------------------------------
 
+5.3 Understanding Variable Precedence
+
+Understanding Variable Scope:
+* Variables can be set with different types of scope:
+	* Global scope: this is when a variable is set from inventory or the command line
+	* Play scope: this is applied when it is set from a play
+	* Host scope: this is applied when set in inventory or using a host variable inclusion file
+* When the same variable is set at different levels, the most specific level gets precedence.
+* When a variable is set from the command line, it will overwrite anything else:
+	* ansible-play book site.yml -e "web_package=apache"
+
+Understanding Bulit-in Variables:
+* Some variables are bulit in and cannot be used for anything else:
+	* hostvars
+	* inventory_hostname
+	* inventory_hostname_short
+	* groups
+	* group_names
+	* ansible_check_mode
+	* ansible_play_batch
+	* ansible_play_hosts
+	* ansible_version
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+5.4 Managing Host Variables
+
+Using Host Variables:
+* Variables can be assigned to hosts and to groups of hosts 
+* The old way of doing so is through inventory, but this is now deprecated because it mixes two types of information in one file
+* Instead, you should use directories to populate host and group variables
+
+
+Defining Host Variables Through Inventory: 
+* A variable can be assigned directly to a host:
+
+[servers]
+web1.example.com web_package=httpd
+
+* Alternatively, variables can be set for host groups
+
+[servers:vars]
+web_package=httpd
+
+
+Using Include Files:
+* To define host and host group variables, directories should be created in the current project directory
+* Use ~/myproject/host_vars/web1.example.com to include host specific variables
+* Use ~/myproject/group_vars/webservers to include host group specific variables
+* Notice that you don't have to define variables in these directories in the playbook, they are picked up automatically
+
+
+sudo yum install -y tree
+tree 
+cat inventory
+cat group_vars/lamp
+vim site.yml
+ansible-playbook site.yml
+tree
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+5.5 Using Multi-valued Variables
+
+Understanding Array and Dictionary:
+* Multi-valued variables can be used in playbooks
+* When using a multi-valued variable, it can be written as an array (list), or as a dictionary (hash)
+* Each of these has their own specific use cases 
+
+Understanding Dictionary (Hash):
+* Dictionaries can be written in two ways:
+  users:
+   linda:
+    username:linda
+    shell: /bin/bash
+   lisa:
+    username: lisa
+    shell: /bin/sh
+
+* Or as:
+  users:
+   linda:{ username: 'linda', shell:'/bin/bash'}
+   lisa:{ username: 'lisa', shell:'/bin/bash'}
+
+Using Dictionary:
+* To address items in a dictionary, you can use two notations:
+	* variable_name['key'], as in users['linda']['shell']
+	* variable_name.key, as in users.linda.shell
+* You cannot use loop or with_items on dictionaries
+
+Using Array (list):
+* Arrays provide a list of items, where each item can be addressed separately 
+  users:
+  -username:linda
+   shell: /bin/bash
+  -username: lisa
+   shell: /bin/sh
+* Individual items in the array can be addressed, using the {{ var_name[0] }} notation  
+* To access all variables, you can use with_items or loop
+
+
+cd arrays
+ls
+ls vars
+cat vars/users-list
+cat vars/users-dictionary
+vim multi-list.yml
+ansible-playbook multi-list.yml
+vim multi-dictionary.yml
+ansible-playbook multi-dictionary.yml
+ 
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+5.6 Using Ansible Vault
 
 
 
