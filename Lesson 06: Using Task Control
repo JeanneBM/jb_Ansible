@@ -1,1 +1,64 @@
+6.1 Using Loops and Items 
+
+Understanding Loops:
+* The loop keyword allows you to iterate through a simple list of items 
+* Before Ansible 2.5, the items keyword was used instead 
+- name: start some services
+    service :
+       name: “{{ item }}”
+       state: started
+    loop:
+       - vsftpd
+       - httpd
+
+Using Variables to Define a Loop:
+* The list that loop is using can be defined by a variable:
+vars:
+  my_services:
+      - httpd
+      - vsftpd
+tasks:
+  - name: start some services
+  service:
+      name:  “{{ item }}”
+      state: started
+  loop:  “{{ my_services }}”
+
+Using Hashes/Dictionaries in Loops:
+* Each item in a loop can be a hash/dictionary with multiple keys in each hash/dictionary
+
+name:  create users using a loop
+hosts: all
+tasks:
+- name: create users 
+  user:
+       name: “{{ item.name }}”
+       state: present
+       groups: “{{ item.groups }}”
+  loop:
+       - name: anna 
+         groups: wheel
+       - name: linda
+         groups: users
+
+Understand loops vs. items:
+* The loop keyword is the current keyword
+* In previous versions of Ansible, the: with_* keyword was used for the same purpose
+* This syntax will probably be deprecated in future versions of Ansible:
+    * with_items: equivalent to the loop keyword
+    * with_file: the item contains a file, which contents is used to loop through
+    * with_sequence: genereates a list of values based on a numeric sequence 
+
+
+vim loopservices.yml
+ansible-playbook loopservices.yml
+vim inventory
+ansible-playbook loopservices.yml
+vim loopusers.yml
+“- name: bob
+    groups: users”
+ansible-playbook loopusers.yml
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
 
