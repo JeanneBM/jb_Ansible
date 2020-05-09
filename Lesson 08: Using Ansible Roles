@@ -118,6 +118,17 @@ ansible-playbook nginx-role.yml
 
 8.4 Using the Ansible Galaxy Command Line Tool
 
+Using the Galaxy CLI Utility:
+* ansible-galaxy serach: will search for roles
+	* If an argument is provided, ansible-galaxy will serach for this argument in the role description
+	* Use options --author, --platforms and --galaxy-tags to narrow down the search results
+	* ansible-galaxy search wordpress --platforms EL
+
+* ansible-galaxy info: provides information about roles 
+	* ansible-galaxy info bertvv.wordpress
+
+* ansible-galaxy install: downloads a role and installs it in ~/.ansible/roles
+
 
 
 	
