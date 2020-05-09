@@ -30,7 +30,7 @@ Directory Layout Best Practices:
 	* Use groups_var/ and host_vars/ to set host related variables
 	* Use roles to standardize common tasks
 	
------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
  
 8.2 Understanding Ansible Roles
 
@@ -95,7 +95,7 @@ Using Roles in a Playbook:
 	  var1: cow
 	  var2: goat
 	  
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 8.3 Using Ansible Galaxy for Standard Roles
 
@@ -114,7 +114,7 @@ vim setup-RedHat.yml
 vim nginx-role.yml
 ansible-playbook nginx-role.yml
 
-------------------------------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 8.4 Using the Ansible Galaxy Command Line Tool
 
@@ -147,7 +147,7 @@ Using a Requirements File:
 - src: file:///opt/local/roles/myrole.tar
   name: myrole
   version: 1.0
-  
+* To install roles using a requirements file, use: ansible-galaxy install -r roles/requirements.yml
   
 
 ansible-galaxy search 'wordpress' --platforms EL
@@ -155,6 +155,12 @@ ansible-galaxy info bertvv.wordpress
 ansible-galaxy install bertvv.wordpress
 vim wordpress.yml
 
+vim roles/requirements.yml
+ansible-galaxy install -r roles/requirements.yml -p roles
+vim roles/requirements.yml
+-> "- version: 2.7.0
+    - name: nginx-2.7.0"
+ansible-galaxy install -r roles/requirements.yml -p roles
 
-
+---------------------------------------------------------------------------------------------------------------------------------------------
 	
