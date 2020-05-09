@@ -133,7 +133,22 @@ Using the Galaxy CLI Utility:
 Managing Roles:
 * ansible-galaxy list: shows installed roles
 * ansible-galaxy remove: can be used to clean up and remove roles
-* ansible-ga
+* ansible-galaxy init creates a directory structure that can be used to start developing your own role:
+	* It interacts with the Ansible Galaxy website API
+	* Specify username and role name as arguments 
+	* ansible-galaxy init user.myrole
+	
+Using a Requirements File:
+* ansible-galaxy: can be used to install a list of roles based on definitions in a requirements file
+* A requirements file is a yml file that defines a list of required roles that are specified using the src keyword
+* The src keyword can contain the name of a role from Ansible Galaxy, or a URL to a custom location pointing to your own roles
+* Create roles/requirements.yml in the projects directory to use it
+* Always specify the optional version attribute, to avoid getting surprises when a newer version of a role has become avaliable.
+- src: file:///opt/local/roles/myrole.tar
+  name: myrole
+  version: 1.0
+  
+  
 
 ansible-galaxy search 'wordpress' --platforms EL
 ansible-galaxy info bertvv.wordpress
