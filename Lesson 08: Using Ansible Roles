@@ -128,6 +128,8 @@ Using the Galaxy CLI Utility:
 	* ansible-galaxy info bertvv.wordpress
 
 * ansible-galaxy install: downloads a role and installs it in ~/.ansible/roles
+* After download, these roles can be used in playbooks, like any other role
+
 
 
 
