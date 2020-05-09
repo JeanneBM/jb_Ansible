@@ -122,7 +122,7 @@ Using the Galaxy CLI Utility:
 * ansible-galaxy serach: will search for roles
 	* If an argument is provided, ansible-galaxy will serach for this argument in the role description
 	* Use options --author, --platforms and --galaxy-tags to narrow down the search results
-	* ansible-galaxy search wordpress --platforms EL
+	* ansible-galaxy search 'wordpress' --platforms EL
 
 * ansible-galaxy info: provides information about roles 
 	* ansible-galaxy info bertvv.wordpress
@@ -130,6 +130,15 @@ Using the Galaxy CLI Utility:
 * ansible-galaxy install: downloads a role and installs it in ~/.ansible/roles
 * After download, these roles can be used in playbooks, like any other role
 
+Managing Roles:
+* ansible-galaxy list: shows installed roles
+* ansible-galaxy remove: can be used to clean up and remove roles
+* ansible-ga
+
+ansible-galaxy search 'wordpress' --platforms EL
+ansible-galaxy info bertvv.wordpress
+ansible-galaxy install bertvv.wordpress
+vim wordpress.yml
 
 
 
