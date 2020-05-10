@@ -172,3 +172,10 @@ Creating Roles:
   for all projects
 * Populate the required role files as discussed before
 
+Creating Roles - Best Practices:
+* Each role should have its own version control repository 
+* Don't put sensitive information in the role, but in the local plybooks or Ansible Vault instead \
+* Use ansible-galaxy init to create the role structure 
+* Don't forget to edit the README.md and the meta/main.yml to contain documentation about your role
+* Roles should be dedicated to one task/function. Use multiple roles to manage multiple tasks/functions.
+* Have a look at existing (Galaxy) roles before starting to write your own
