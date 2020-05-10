@@ -237,3 +237,10 @@ ansible-playbook pretasks.yml
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
+8.7 Understanding RHEL System Roles
+
+* The rhel-system-roles package can be installed to provide some standard roles for RHEL 6.10 and later
+* These roles are based on the community linux-system-roles and supported by Red Hat support 
+* Use the rhel-system-roles to overcome the difference between configuration choices on RHEL 6,7, and 8
+
+---------------------------------------------------------------------------------------------------------------------------------------------
