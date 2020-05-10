@@ -244,3 +244,4 @@ ansible-playbook pretasks.yml
 * Use the rhel-system-roles to overcome the difference between configuration choices on RHEL 6,7, and 8
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
+
