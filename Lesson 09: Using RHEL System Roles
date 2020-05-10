@@ -1,0 +1,22 @@
+9.1 Understanding RHEL System Roles
+
+* RHEL system roles are provided to configure standard RHEL operations 
+* RHEL system roles have been provided since RHEL 7.4, and can be used to configure RHEL 6.10 and later
+* Install the rhel-system-roles package to use them
+* RHEL system roles are derived from the Ansible Linux System Roles project, which is avaliable through Ansible Galaxy
+
+Current RHEL System Roles:
+* Currently, the following RHEL system roles are provided:
+      * rhel-system-roles.kdump configurates the kdump crash recovery service 
+      * rhel-system-roles.network configurates network interfaces
+      * rhel-system-roles.selinux manages all aspects of SELinux
+      * rhel-system-roles.timesync is used to set up Network Time Protocol or Precision Time Protocol
+      * rhel-system-roles.postfix is used to configurate a host as a Postfix MTA
+      * rhel-system-roles.firewall configurates a firewall
+      * rhel-system-roles.tuned configurates the tuned service 
+* Addiotional RHEL system roles are likely to be introduced
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+9.2 Installing RHEL System Roles
+
