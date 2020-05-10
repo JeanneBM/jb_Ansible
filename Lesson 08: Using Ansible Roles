@@ -198,10 +198,23 @@ Using Conditional Roles:
       name: lamp
     when: "ansible_facts['os_family'] == 'RedHat'"
     
-    
+
 cd roles
 ls
 tree motd
 cd motd
 vim tasks/main.yml
 vim templetes/motd.j2
+vim defaults/main.yml
+vim vars/main.yml
+vim handlers/main.yml
+rm -rf handlers/ vars/
+tree
+rm -rf tests/
+vim meta/main.yml
+vim README.md
+cd .. / .. 
+ls
+vim motd-role.yml
+ansible-playbook motd-role.yml
+ansible ansible2.example.com -m shell -a 'cat /etc/motd'
