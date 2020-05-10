@@ -164,3 +164,11 @@ ansible-galaxy install -r roles/requirements.yml -p roles
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 	
+8.5 Creating Custom Roles
+
+Creating Roles:
+* To create your own roles, use ansible-galaxy init myrole to create the role directory structure
+* Mind the location of the directory structure, you can put it in the local project directory, or in a directory that is accesible 
+  for all projects
+* Populate the required role files as discussed before
+
