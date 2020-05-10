@@ -199,3 +199,9 @@ Using Conditional Roles:
     when: "ansible_facts['os_family'] == 'RedHat'"
     
     
+cd roles
+ls
+tree motd
+cd motd
+vim tasks/main.yml
+vim templetes/motd.j2
