@@ -174,7 +174,7 @@ Creating Roles:
 
 Creating Roles - Best Practices:
 * Each role should have its own version control repository 
-* Don't put sensitive information in the role, but in the local plybooks or Ansible Vault instead \
+* Don't put sensitive information in the role, but in the local plybooks or Ansible Vault instead 
 * Use ansible-galaxy init to create the role structure 
 * Don't forget to edit the README.md and the meta/main.yml to contain documentation about your role
 * Roles should be dedicated to one task/function. Use multiple roles to manage multiple tasks/functions.
@@ -218,3 +218,22 @@ ls
 vim motd-role.yml
 ansible-playbook motd-role.yml
 ansible ansible2.example.com -m shell -a 'cat /etc/motd'
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+8.6 Managing Order of Execution 
+
+Understanding Role Order of Execution:
+* Role tasks are always executed before playbook tasks
+* Next, playbook tasks are executed 
+* And after playbook tasks, handlers are executed
+* Use: pre_tasks to define playbook tasks that are to be executed before the tasks in a role:
+	* If these tasks notify a handler, this handler is executed before as well
+* The post_tasks keyword can be used to define playbook tasks that are executed after playbook tasks and roles
+
+
+vim pretasks.yml
+ansible-playbook pretasks.yml
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
