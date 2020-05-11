@@ -20,3 +20,83 @@ Current RHEL System Roles:
 
 9.2 Installing RHEL System Roles
 
+* Use: yum install rhel-system-roles to install them 
+* The roles are installed to the /usr/share/ansible/roles directory, notice that the upstream linux-system-roles name is provided as a symbolic link to provide maximum compatibility
+* Documentation of Ansible system roles is avaliable in /usr/share/doc/rhel-system-roles-<version>
+* Look for example YAML files in the role directories
+
+
+su -
+yum search rhel-system-roles
+yum install -y rhel-system-roles
+rpm -ql rhel-system-roles
+cd /usr/share/ansible/roles
+ls
+cd rhel-system-roles.selinux/
+ls
+tree
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+9.3 Using the RHEL SELinux System Role
+
+The RHEL system role for SELinux can do several things:
+* Set enforcing or permissive mode
+* Set SELinux file contexts 
+* Run restorecon
+
+Rebooting After Making Changes:
+* In some cases, to apply SELinux changes (such as a switch between enabled and disabled mode), a reboot is required
+* The SELinux role doesn't reboot hosts itself because it should be up to the administrator to do that
+* The role will set the selinux_reboot_required variable to true, and fail if a reboot is required
+* This is used in a block / rescue structure, where the play is failing if the variable is not set to true 
+* If the variable is set to true, the host is rebooted and the role is started again 
+* See sample code in example-selinux-playbook in the roles documentation
+
+Setting SELinux Related Variables:
+* To Configure SELinux from the role, set at least the following variables:
+	* selinux_state
+	* selinux_booleans
+	* selinux_fcontexts
+	* selinux_restore_dirs
+	* selinux_ports
+	
+	
+cd /usr/share/doc/rhel-system-roles/selinux
+ls
+less README.md
+vim example-selinux-playbook.yml
+cd /usr/share/ansible/
+ls
+cd roles
+ls
+cd rhel-system-roles.selinux/
+tree
+vim tasks/main.yml
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+9.4 Using the RHEL TimeSync System Role 
+
+Why Does it Make Sense?
+* rhel-system-roles.timesync can be used to manage time synchronization
+* As the timesync service is different between RHEL 6 and RHEL 7/8, it makes sense managing this functionality using a rhel-system-role
+
+Using rhel-system-roles.timesync:
+* The role itself is configured to work with different variables, of which timesync_ntp_servers is the most important one
+* Items in this variable are made up of different attributes, of which two are common:
+	* hostname: shows the hostname of the time server
+	* iburst: specifies that fast iburst synchronization should be used
+* The timezone variable is also important, and sets the current timezone to be used
+* A default playbook is avaliable in /usr/share/doc/rhel-system-roles/timesync
+
+
+vim /usr/share/doc/rhel-system-roles/timesync
+vim /usr/share/doc/rhel-system-roles/timesync/example-timesync-playbook.yml
+vim setuptime.yml
+vim setuptime-light.yml
+vim group_vars/servers/timesync.yml
+vim inventory
+ansible-playbook setupline-light.yml
+
+---------------------------------------------------------------------------------------------------------------------------------------------
