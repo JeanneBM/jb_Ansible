@@ -21,7 +21,8 @@ Current RHEL System Roles:
 9.2 Installing RHEL System Roles
 
 * Use: yum install rhel-system-roles to install them 
-* The roles are installed to the /usr/share/ansible/roles directory, notice that the upstream linux-system-roles name is provided as a symbolic link to provide maximum compatibility
+* The roles are installed to the /usr/share/ansible/roles directory, notice that the upstream linux-system-roles name is provided 
+  as a symbolic link to provide maximum compatibility
 * Documentation of Ansible system roles is avaliable in /usr/share/doc/rhel-system-roles-<version>
 * Look for example YAML files in the role directories
 
