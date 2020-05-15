@@ -30,4 +30,40 @@ vim pascal.py
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
-10.2 
+10.2 Addressing Host Patterns 
+
+Addressing Hosts:
+* By default, hosts are addressed with their host name as specified in inventory
+* IP addresses can also be used
+* Host groups are common and are defined in inventory:
+	* Group: all is implicit and doesn't have to be defined
+	* Group: ungrouped is also implicit and addresses all hosts that are not members of a group
+* If special characters are used, always put them between quotes to avoid the special character being interpreted by the shell
+
+Addressing Hosts Wildcard Examples:
+* -hosts: '*.example.com'
+* -hosts: '192.168.*'
+* -hosts: 'web*'
+* -hosts: web1,db1,192.168.4.2
+* -hosts: web,&eastcoast
+* -hosts: web,!web1
+* -hosts: all,!web
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+10.3 Configuring Parallelism
+
+Understanding Processing Order:
+* Plays are executed in order on all hosts referred to, and normally Ansible will start the next task if this task successfully completed on all managed hosts
+* Ansible can run on multiple managed hosts simultaneously, but by default the maximum number of simultaneous hosts is limited to five 
+* Set forks=n in ansible.cfg to change the maximum number of simultaneous hosts
+* Alternatively, use -f nn to specify the max number of forks as argument to the ansible[-playbook] command
+* The dafault of 5 is very limited, so you can set this parameter much higher, in particular if most of the work is done on the managed hosts and not on the control mode
+
+Managing Rolling Updates:
+* The dafault behaviour of running one task on all hosts, and next proceed to the next task means that in cluster environments you may have all hosts temporarily being unavaliable
+* Use the serial keyword in the playbook to run hosts through the entire play in batches
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
