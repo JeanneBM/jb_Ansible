@@ -66,4 +66,43 @@ Managing Rolling Updates:
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
+10.4 Organizing Directory Structure
+
+Understanding Inclusion:
+* If playbooks grow larger, it is common to use modularity by using includes and imports
+* Includes and imports can happen for playbooks as well as tasks 
+* An include is a dynamic process; Ansible processes the contents of the included files at the moment that this import is reached 
+* An import is a static process; Ansible preprocesses the imported file contents before teh actual play is started
+	* Playbook imports must be defined at the beginning of the playbook, using: import_playbook
+	
+Including Tasks Files:
+* A task file is a flat list of tasks
+* Use: import_tasks to statically import a task file in the playbook, it will be included at the location where it is imported
+* Use: include_tasks to dynamically include a task file
+* Dynamically including tasks means that some features are not avaliable:
+	* ansible-playbook --list-tasks will not show teh tasks
+	* ansible-playbook --start-at-task doesn't work
+	* You cannot trigger a handler in an imported task file from the main task file
+* Best practice: store task files in a dedicated directory to make management easier 
+
+When to Include Task Files:
+* When modularity is required, for instance to differentiate between groups of tasks that need to be executed against specific host types
+* When different groups of IT staff are responsible for different setup tasks 
+* If a task needs to be executed only in specific cases
+
+Using Variables for External Plays and Tasks:
+* In the design, it is recommended to keep include files as generic as possible 
+* Define variables independently from the playbook
+	* in separate include files
+	* using group_vars and host_vars
+	* or using local facts
+* This allows you to process different values on different groups of hosts, while still using the same playbook
+
+
+vim includes.yml
+vim install-and-setup.yml
+ansible-playbook includes.yml
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
 
