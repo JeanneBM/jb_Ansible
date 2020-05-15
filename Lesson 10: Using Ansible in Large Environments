@@ -1,5 +1,33 @@
 10.1 Managing Inventory
 
 Understanding Inventory Options:
-* A static inventory file 
+* A static inventory file can be used as a list of managed hosts
+* Dynamic inventory can automatically discover hosts, by talking to an external host management system, such as FreeIPA, Active Directory, 
+  Red Hat Satelite and more
+* Also, multiple inventories can be used, for instance by putting multiple inventory files in a directory and use that as the source 
+  of inventory
 
+Managing Dynamic Inventory:
+* Dynamic inventory scripts are avaliable for different environments
+	* Check https://github.com/ansible/ansible/tree/devel/contrib/inventory
+* They are used like static inventory files, through ansible.cfg, or using the -i option to the ansible[-playbook] command
+* Instead of using community dynamic inventory scripts, you can also write your own
+
+Writing Dynamic Inventory Scripts:
+* The only requirement is that the script returns the inventory information in JSON format 
+* To see the correct output format, use ansible-inventory --list on any inventory
+* Scripts can be written in any language, but Python is common
+
+Using Multiple Inventory Files:
+* If the inventory specified is a directory, all inventory files in that directory are considered
+* This includes as well as dynamic inventory
+* Inventory files cannot be created with dependencies to other inventory files
+
+
+ansible-inventory --list
+vim pascal.py
+./pascal.py --list
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+10.2 
