@@ -1,3 +1,33 @@
 11.1 Managing Ansible Logs
 
+Understanding Ansible Logging:
+* By default Ansible is not configured to log its output anywhere 
+* Set log_path in ansible.cfg to write logs to a specific destination
+	* Create this file in the project directory, /var/log is not writable by the Ansible user and will only work when running the playbook 
+    with sudo
+* When using this, you should also use log rotation
+
+
+vim ansible.cfg // "[defaults] ... " + "log_path = lesson11.log"
+ansible-playbook vsftpd.yml
+ls
+less lesson11.log
+ansible-playbook --syntax-check vsftpd.yml
+vim vsftpd.yml
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+11.2 Using the Debug Module
+
+* Variables play an important role in playbooks
+* The debug module is used to show values of variables in playbooks
+* It can also be used to show messages in specific error situations 
+
+
+ansible-doc debug
+vim debugme.yml
+ansible-playbook debugme.yml
+ansible-playbook -v debugme.yml
+
+----------------------------------------------------------------------------------------------------------------------------------------------
 
