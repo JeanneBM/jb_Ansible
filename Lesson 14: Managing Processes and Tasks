@@ -1,1 +1,40 @@
+14.1 Understanding Modules for Managing Processes and Tasks
+
+Modules for Managing Processes and Tasks:
+* cron: Uses cron to schedule a job
+* at: Uses at to run a future job
+* file: Because some tasks simply don't have a specific Ansibe module
+* service: Manages Services
+* service_facts: Uses information about services as facts
+* systemd: Manages Systemd Services
+
+Understanding the cron Module:
+* The cron module has a name option, which is useful to uniquely identify entries in crontab
+* Notice that this option has no meaning for Cron, but it helps Ansible in managing crontab entries
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+14.2 Implementing a Playbook to Manage Processes and Tasks
+
+vim setup_crontab.yml
+cat inventory
+ansible-playbook setup-crontab.yml
+ansible ansible2.example.com -a "ls /etc/cron.d"
+ansible ansible2.example.com -a "cat /etc/cron.d/keep-alive-messages"
+vim delete-cron-job.yml
+ansible-playbook delete-cron-job.yml
+vim setup-crontab.yml
+vim delete-cron-job.yml
+ansible-playbook delete-cron-job.yml
+vim setup-at-task.yml
+ansible-playbook setup-at-task.yml
+ansible ansible2.example.com -a "which at" //failed
+ansible-doc yum
+ansible ansible2.example.com -m yum -a "name=at state=present"
+ansible-playbook setup-at-task.yml
+ansible ansible1.example.com -m yum -a "name=at state=present"
+vim setup-boot-target.yml
+ansible-playbook setup-boot-target.yml -v
+
+----------------------------------------------------------------------------------------------------------------------------------------------
 
