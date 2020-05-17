@@ -1,1 +1,35 @@
+12.1 Understanding Modules Related to Software Management 
+
+Understanding Software Management Tasks:
+* To manage software on RHEL systems, different tasks need to be managed
+* Systems need to be subscribed 
+* Repositories and software channels need to be configured
+* Software needs to be installed and removed
+
+Understanding Software Management Modules:
+* package: Distribution agnostic module to manage packages
+* win_package: Manages packages on Windows
+* apt: Manages packages on Ubuntu
+* yum: Manages packages on RHEL
+* yum_repository: Manages Yum repositories
+* package_facts: Returns information about packages as facts
+* rpm_key: Adds or removes GPG keys from an RPM package database
+* redhat_subscription: Uses the subscription_manager command to manage subscriptions
+* rhn_register: Managed Red Hat Network registration using: rhnreg_ks
+* rhn_channel: Manages RHN Channel subscription
+* Other modules are avaliable, see
+ https://docs.ansible.com/ansible/latest/modules/list_of_packaging_modules.html for more information
+ 
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+12.2 Implementing a Playbook to Manage Software
+
+
+vim sw_mgmt_demo.yml
+ansible-playbook sw_mgmt_demo.yml
+ansible ansible2.example.com -a "cat /etc/yum.repos.d/lesson12" //failed
+ansible ansible2.example.com -a "ls /etc/yum.repos.d/"
+ansible ansible2.example.com -a "cat /etc/yum.repos.d/lesson12.repo" //ok
+
+----------------------------------------------------------------------------------------------------------------------------------------------
 
