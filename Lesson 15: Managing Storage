@@ -1,1 +1,20 @@
+15.1 Understanding Modules for Managing Storage
+
+* parted: runs the parted utility
+* lvg: create LVM volume group
+* lvol: creates LVM logical volumes
+* filesystem: managed filesystems
+* mount: manages mounts
+* vdo: manages VDO storage
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+15.2 Implementing a Playbook to Manage Storage
+
+vim setup-storage.yml
+cat vars/storage.yml
+vim setup-storage.yml
+ansible-playbook setup-storage.yml
+
+----------------------------------------------------------------------------------------------------------------------------------------------
 
