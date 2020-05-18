@@ -103,3 +103,21 @@ ansible --version
 * Further verification is not possible yet, as additional settings need to be done
 
 -----------------------------------------------------------------------------------------------------------------------------------------------
+
+Lesson 02: Setting up a Managed Environment 	
+Lesson 03: Using Ad Hoc Commands 	
+Lesson 04: Getting Started with Playbooks 	
+Lesson 05: Working with Variables and Facts 	
+Lesson 06: Using Task Control 	
+Lesson 07: Deploying Files 	
+Lesson 08: Using Ansible Roles 	
+Lesson 09: Using RHEL System Roles 	
+Lesson 10: Using Ansible in Large Environments 	
+Lesson 11: Troubleshooting Ansible 	
+Lesson 12: Managing Software with Ansible 	
+Lesson 13: Managing Users 	
+Lesson 14: Managing Processes and Tasks 	
+Lesson 15: Managing Storage 	
+Lesson 16: Managing Networking
+	
+	
