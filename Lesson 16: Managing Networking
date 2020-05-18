@@ -14,7 +14,7 @@ Setting Variables in the RHEL8 System Roles:
 
 cd /usr/share/ansible/roles
 ls
-cd 	rhel-system-roles.network/
+cd rhel-system-roles.network/
 ls
 cd tasks/
 ls
