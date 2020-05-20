@@ -8,4 +8,16 @@ Use a RHEL System Role to set up network cards in managed machines:
 L10
 
 Analyze the procject that is in the lesson10/lab directory:
+1. Make sure that you have cloned the Github repository in order to access it
+2. Optimize it for use in a large environment 
+3. You will notice that lesson 10 lab is not organized in the most efficient way - apply everything you've learned in this lesson to optimize it
+   for use in a large environment. There are some errors as well - You don't have to fix the errors yet.
+
+L11 
+
+Work on the same lab project that we've worked on in lesson 10:
+1. Debug it
+2. Get out all of the errors
+
+L12
 
