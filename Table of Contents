@@ -2,6 +2,8 @@ Red Hat Certified Engineer (RHCE) EX294: Red Hat Ansible Automation, Third Editi
 2020
 RHEL 8
 
+Module 1: Introduction to Ansible
+
 Lesson 01: Installing Ansible
 
 1.1 Understanding Ansible
@@ -40,6 +42,8 @@ Lesson 05: Working with Variables and Facts
 5.6 Using Ansible Vault 
 5.7 Working with Facts
 5.8 Creating Custom Facts
+
+Module 2: Using Advanced Ansible Soultions 
 
 Lesson 06: Using Task Control 	
 
@@ -93,6 +97,8 @@ Lesson 11: Troubleshooting Ansible
 11.6 Analyzing Playbook Errors
 11.7 Avoiding Errors in Playbook Best Practices
 
+Module 3: Managing Systems with Ansible
+
 Lesson 12: Managing Software with Ansible 	
 
 12.1 Understanding Modules Related to Software Management 
@@ -120,4 +126,4 @@ Lesson 16: Managing Networking
 16.2 Understanding Modules for Network Management
 16.3 Using Ansible to Manage IPv6
 
-
+Module 4: Sample Exam
