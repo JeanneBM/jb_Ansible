@@ -1,1 +1,11 @@
+L9
+
+Use a RHEL System Role to set up network cards in managed machines:
+1. You can use a simple configuration where the interface is set to DHCP
+2. Configure your virtual machine with an additional network card (you can do this test on an additional network card to avoid from throwing away
+   your current configuration and losing your connection)
+   
+L10
+
+Analyze the procject that is in the lesson10/lab directory:
 
