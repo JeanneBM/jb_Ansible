@@ -21,3 +21,9 @@ Work on the same lab project that we've worked on in lesson 10:
 
 L12
 
+1. Set up a repository on control.example.com
+2. This repository should offer at least one file, including the nmap file
+3. Provide a file list using variables
+4. Configure ansible1 and ansible2 to use the repository that is provided through the package repository
+5. Install the nmap package from this repository
+
