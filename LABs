@@ -1,11 +1,31 @@
-L9
+
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Lesson 09: Using RHEL System Roles 	
 
 Use a RHEL System Role to set up network cards in managed machines:
 1. You can use a simple configuration where the interface is set to DHCP
 2. Configure your virtual machine with an additional network card (you can do this test on an additional network card to avoid from throwing away
    your current configuration and losing your connection)
-   
-L10
+
+Solution:
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Lesson 10: Using Ansible in Large Environments 	
 
 Analyze the procject that is in the lesson10/lab directory:
 1. Make sure that you have cloned the Github repository in order to access it
@@ -13,13 +33,21 @@ Analyze the procject that is in the lesson10/lab directory:
 3. You will notice that lesson 10 lab is not organized in the most efficient way - apply everything you've learned in this lesson to optimize it
    for use in a large environment. There are some errors as well - You don't have to fix the errors yet.
 
-L11 
+Solution:
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Lesson 11: Troubleshooting Ansible 	
 
 Work on the same lab project that we've worked on in lesson 10:
 1. Debug it
 2. Get out all of the errors
 
-L12
+Solution:
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Lesson 12: Managing Software with Ansible 
 
 1. Set up a repository on control.example.com
 2. This repository should offer at least one file, including the nmap file
@@ -27,3 +55,14 @@ L12
 4. Configure ansible1 and ansible2 to use the repository that is provided through the package repository
 5. Install the nmap package from this repository
 
+Solution:
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
+---------------------------------------------------------------------------------------------------------------------------------------------
+Solution:
