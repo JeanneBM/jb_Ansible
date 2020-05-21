@@ -72,8 +72,14 @@ Solution:
 Lesson 14: Managing Processes and Tasks
 Solution:
 ---------------------------------------------------------------------------------------------------------------------------------------------
+
 Lesson 15: Managing Storage
+
+1. Write a playbook that detects all storage devices on managed systems. It is about getting into Ansible facts and do the thing that needs 
+   to be done withe the Ansible facts.
+
 Solution:
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 Lesson 16: Managing Networking	 
