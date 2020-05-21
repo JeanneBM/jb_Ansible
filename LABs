@@ -80,6 +80,8 @@ Lesson 16: Managing Networking
 
 Manage networking:
 1. Write a playbook that verifies that two network interfaces are avaliable
-2. If  second interface is avaliable, the playbook should set it up with the network configuration and assign the IP address 192.168.4.30/24 on the interface   
+2. If  second interface is avaliable, the playbook should set it up with the network configuration and assign the IP address 192.168.4.30/24 
+   on the interface   
+
 Solution:
  
