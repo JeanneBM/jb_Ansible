@@ -67,10 +67,20 @@ Solution:
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 Lesson 13: Managing Users
+
+
 Solution:
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
+
 Lesson 14: Managing Processes and Tasks
+
+1. Set the default boot state of the file servers to multi-user.target
+2. Make sure to reboot the server and configure your playbook such that it will show the message "successfully rebooted" once it is 
+   avaliable again 
+   
 Solution:
+
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 Lesson 15: Managing Storage
@@ -91,3 +101,6 @@ Manage networking:
 
 Solution:
  
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+
