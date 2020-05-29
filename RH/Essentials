@@ -1,1 +1,111 @@
+Ansible Essentials: Simplicity in Automation Technical Overview | RH
+--------------------------------------------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------------------------
+
+Ansible Essentials Introduction
+
+1. What is Ansible and the Ansible Way?
+	What is Ansible?
+	Ansible is Powerful
+	Ansible is Agentless
+	Ansible is Cross Platform:
+	Ansible Works with Existing Toolkits:
+	Ansible comes Bundled with over 450 Modules
+	Community
+	The Complete Package
+	Use Cases
+	Installing Ansible
+
+2. How Ansible Works
+3. Ad-Hoc Commands
+4. Introduction to Playbooks
+5. Introduction to Roles 
+6. Creating the Roles Structures with Ansible-Galaxy
+7. Breaking an Existing Playbook into a Role
+8. Creating a New Role
+9. Utilizing Roles in your New Main Playbooks
+10. Overview of Ansible Tower
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+1. What is Ansible and the Ansible Way
+
+What is Ansible?
+- An automation language that can describe an IT application infrastructure in Ansible Playbooks
+- An automation engine that runs Ansible Playbooks
+- Ansible Tower is an enterprise framework for controlling, securing and managing your Ansible automation with a UI and RESTful API
+- Human readable automation
+- No special coding skills needed
+- Tasks executed in order
+- Get productive quickly
+
+Ansible is Powerful:
+- Application deployment
+- Configuration management 
+- Workflow orchestration
+- Orchestrate the application lifecycle
+
+Ansible is Agentless:
+- Agentless architecture
+- Uses OpenSSH & WinRM
+- No agents to exploit or update
+- More efficient & more secure
+
+Ansible is Cross Platform:
+- Agentless support for all major OS variants, physical, virtual, cloud and network
+
+Ansible Works with Existing Toolkits:
+- Homogenize existing environments by leveraging current toolsets and update mechanisms
+
+Ansible comes Bundled with over 450 Modules:
+- Cloud
+- Containers
+- Database
+- Files
+- Messaging
+- Monitoring 
+- Network
+- Notifications
+- Packaging
+- Source Control
+- System 
+- Testing
+- Utilities
+- Web Infrastructure
+
+Community:
+- The most popular open-source automation community on GitHub
+- Over 1200 users on IRC channel
+- Over 450 modules shipped with Ansible
+
+
+The Complete Package:
+1. BMC Mcollective Chef Metal -> MULTI-TIER ORCHESTRATION
+2. Cobber AWS JuJu -> PROVISIONING
+3. Chef Puppet CFEngine -> CONFIGURATION MANAGEMENT
+4. Fabric Capistrano Noilo -> APPLICATION DEPLOYMENT
+
+Use Cases:
+- Configuration Management 
+- Security and Compliance
+- Application Deployment
+- Orchestration
+- Continuous Delivery
+- Provisioning 
+
+Installing Ansible:
+
+# the most common and preferred way of installation
+$ pip install ansible
+
+# install the epel-release RPM if needed on CentOS, RHEL, or Scientific Linux
+$ sudo yum install ansible
+
+# you will need the PPA repo configured
+$ sudo apt-get install ansible
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+2. How Ansible Works
+
 
