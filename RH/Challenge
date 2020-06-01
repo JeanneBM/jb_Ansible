@@ -8,8 +8,8 @@ Ansible Essentials Introduction
 	What is Ansible?
 	Ansible is Powerful
 	Ansible is Agentless
-	Ansible is Cross Platform:
-	Ansible Works with Existing Toolkits:
+	Ansible is Cross Platform
+	Ansible Works with Existing Toolkits
 	Ansible comes Bundled with over 450 Modules
 	Community
 	The Complete Package
@@ -17,9 +17,27 @@ Ansible Essentials Introduction
 	Installing Ansible
 
 2. How Ansible Works
+	Modules
+	Modules: Run Commands
+	
 3. Ad-Hoc Commands
+	Sidebar: Discovered Facts
+	Inventory
+	Static Inventory Example
+	
 4. Introduction to Playbooks
+	Variables
+	Variable Precedence
+	Variables
+	Example Tasks in a Play
+	Handler Tasks
+	Plays & Playbooks
+	Playbook Example
+
 5. Introduction to Roles 
+	Roles
+	Project with Embedded Roles
+
 6. Creating the Roles Structures with Ansible-Galaxy
 7. Breaking an Existing Playbook into a Role
 8. Creating a New Role
@@ -157,7 +175,7 @@ $ ansible web -m command -a "uptime"
 $ ansible localhost -m setup
 
 
-Sidebar: Discovered facts:
+Sidebar: Discovered Facts:
 
 $ ansible localhost -m setup
 localhost | success >> {
