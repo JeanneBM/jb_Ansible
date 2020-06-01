@@ -108,4 +108,273 @@ $ sudo apt-get install ansible
 
 2. How Ansible Works
 
+- Playbooks are written in yaml: Tasks are executed sequentially invokes; Ansible modules
+- Modules are "tools in the toolkit": Python, Powershell, or any language; Extend Ansible simplicity to entire stack
+- Inventory: [web]
+			 webserver1.example.com
+			 webserver2.example.com
+			 
+			 [db]
+			 dbserver1.example.com
+	 
+- Cloud: OpenStack, VMware, EC2, Rackspace, GCW, Azure, Spacewalk, Hanlon, Cobbler
+- Custom CMDB
+- Plugins are "gears in the engine": Code that plugs into the core engine; Adaptability for various uses & platforms
+
+Modules:
+- apt/yum
+- copy
+- file
+- get_url
+- git
+- ping
+- debug
+- service
+- synchronize 
+- template
+- uri
+- user 
+- wait_for
+- assert
+
+Modules: Run Commands:
+- command: Takes the command and executes it. The most secure and predictable.
+- shell: Executes through a shell like /bin/sh so you can use pipes etc.
+- script: Runs a local script on a remote node after transferring it. 
+- raw: Executes a command without going through the Ansible module subsystem.
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+3. Ad-Hoc Commands
+
+# check all my inventory hosts are ready to be managed by Ansible
+$ ansible all -m ping
+
+# run the uptime command on all hosts in the web group 
+$ ansible web -m command -a "uptime"
+
+# collect and display the discovered for the localhost
+$ ansible localhost -m setup
+
+
+Sidebar: Discovered facts:
+
+$ ansible localhost -m setup
+localhost | success >> {
+	"ansible_facts": {
+	"ansible_default_ipv4": {
+		"address": "192.168.1.37",
+		"alias": "wlan0",
+		"gateway": "192.168.1.1",
+		"interface": "wlan0",
+		"macaddress": "c4:85:08:3b:a9:16"
+		"mtu": 1500,
+		"netmask": "255.255.255.0",
+		"network": "192.168.1.0",
+		"type": "ether"
+	},
+	
+Inventory:
+- Inventory is a collection of hosts (nodes) against which Ansible can work with. 
+	* Hosts
+	* Groups sources 
+	* Inventory-specific data
+	* Static or dynamic
+	
+Static Inventory Example:
+- 10.42.0.2
+- 10.42.0.6
+- 10.42.0.7
+- 10.42.0.8
+- 10.42.0.100
+
+============================================================================
+
+[control] 
+control ansible_host=10.42.0.2
+
+[web]
+node-1 ansible_host=10.42.0.6
+node-2 ansible_host=10.42.0.7
+node-3 ansible_host=10.42.0.8
+
+[haproxy]
+haproxy ansible_host=10.42.0.100
+
+[all:vars]
+ansible_user=vagrant
+ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_keys
+
+============================================================================
+
+ls
+cat hosts
+ansible all -i hosts -u vagrant -m ping
+ansible all -i hosts -u vagrant -m setup
+ansible webservers -i hosts -u vagrant -m yum -a "name=httpd state=present" -b
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+4. Introduction to Playbooks (and demonstration)
+
+Variables:
+- Ansible can work with metadata from various sources and manage their context on the form of variables.
+
+Variable Precedence: 
+1. Extra vars
+2. Task vars (only for the task)
+3. Block vars (only for tasks in the block)
+4. Role and include vars
+5. Play vars_files 
+6. Play vars_prompt 
+7. Play vars
+8. Set_facts
+9. Registered vars
+10. Host facts
+11. Playbook host_vars
+12. Playbook group_vars
+13. Inventory host_vars
+14. Inventory group_vars
+15. Inventory vars
+16. Role defaults
+
+Variables: 
+- file: A directory should exist
+- yum: A package should be installed
+- service: A service should be running
+- template: Render a config file from a template
+- get_url: Fetch an archive file from a URL
+- git: Clone a source code repository
+
+Example Tasks in a Play:
+
+tasks:
+	- name: add cache dir
+	  file:
+		path: /opt/cache
+		state: directory
+		
+	- name: install nginx
+	  yum: 
+		name: nginx
+		state: latest
+		
+	- name: restart nginx
+	  service: 
+		name: nginx
+		state: restarted
+		
+		
+Handler Tasks:
+- Handlers are special tasks that run at the end of a play if notified by another task.
+- If a configuration file gets changed notify a service restart task it needs to run.
+
+Plays & Playbooks:
+- Plays are ordered sets of tasks to execute against host selections from your inventory.
+- A playbook is a file containing one or more plays.
+
+Playbook Example:
+
+============================================================================
+
+---
+- name: install and start apache
+  hosts: web
+  vars:
+	http_port: 80
+	max_clients: 200
+  remote_user: root
+  
+  tasks:
+  - name: install httpd
+    yum: pkg=httpd state=latest
+  - name: write the apache config file
+	template: src=/srv/httpd.j2 dest=/etc/httpd.conf
+  - name: start httpd
+    service: name=httpd state=started
+
+============================================================================
+site.yml
+	
+---
+- name: install and start apache
+  hosts: webservers
+  remote_user: vagrant
+  become: yes
+  
+  tasks:
+  - name: install epel repo 
+	yum: name=epel-release state=present
+	
+  - name: install python bindings for SELinux
+	yum: name={{item}} state=present
+	with_items:
+	- libselinux-python
+	- libsemanage-python
+	
+  - name: test to see if SELinux is running
+	command: getenforce
+	register: sestatus
+	changed_when: false
+	
+  - name: install apache
+	yum: name=httpd state=present
+	
+  - name: start apache
+	service: name=httpd state=started enabled=yes
+
+
+cat site.yml
+ansible-playbook -i hosts site.yml
+
+============================================================================
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+5. Introduction to Roles (and demonstration)
+
+Roles:
+- Roles are the packages of closely related Ansible content that can be shared more easily than plays alone.
+
+Project with Embedded Roles:
+
+site.yml
+roles/
+	common/
+		files/
+		templates/
+		tasks/
+		handlers/
+		vars/
+		defaults/
+		meta/
+	webservers/
+		files/
+		templates/
+		tasks/
+		handlers/
+		vars/
+		defaults/
+		meta/
+		
+============================================================================
+
+# site.yml
+
+---
+- hosts: web
+  roles:
+	 - common
+	 - webservers
+	 
+============================================================================
+
+http://galaxy.ansible.com
+
+--------------------------------------------------------------------------------------------------------------------------------
+
+7. Breaking an Existing Playbook into a Role (and demonstration)
+
+Przykladowy projekt z podzialem na packages
+
 
