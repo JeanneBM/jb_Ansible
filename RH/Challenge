@@ -488,7 +488,7 @@ Server list: <br>
 
 ---
 - name: restart ntp
-	service: name=ntpd state=restarted
+  service: name=ntpd state=restarted
 
 ============================================================================
 
@@ -507,14 +507,14 @@ Server list: <br>
 
 ---
 - name: install ntp 
-	yum: name=ntp state=present
+  yum: name=ntp state=present
 
 - name: configure ntp file
-	template: src=ntp.conf.j2 dest=/etc/ntp.conf
-	notify: restart ntp
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify: restart ntp
 
 - name: start ntp
-	service: name=ntpd state=started
+  service: name=ntpd state=started
 	
 ____________________________________________________________________________
 
@@ -539,15 +539,15 @@ ____________________________________________________________________________
 
 ---
 - name: install python bindings for SELinux
-	yum: name={{item}} state=present
-	with_items:
-	- libselinux-python
-	- libsemanage-python
+  yum: name={{item}} state=present
+  with_items:
+  - libselinux-python
+  - libsemanage-python
 	
 - name: test to see if SELinux is running
-	command: getenforce
-	register: sestatus
-	changed_when: false
+  command: getenforce
+  register: sestatus
+  changed_when: false
 
 ============================================================================
 
@@ -561,24 +561,24 @@ ____________________________________________________________________________
   
   tasks:
   - name: install epel repo 
-	yum: name=epel-release state=present
+    yum: name=epel-release state=present
 	
   - name: install python bindings for SELinux
-	yum: name={{item}} state=present
-	with_items:
-	- libselinux-python
-	- libsemanage-python
+    yum: name={{item}} state=present
+    with_items:
+    - libselinux-python
+    - libsemanage-python
 	
   - name: test to see if SELinux is running
-	command: getenforce
-	register: sestatus
-	changed_when: false
+    command: getenforce
+    register: sestatus
+    changed_when: false
 	
   - name: install apache
-	yum: name=httpd state=present
+    yum: name=httpd state=present
 	
   - name: start apache
-	service: name=httpd state=started enabled=yes
+    service: name=httpd state=started enabled=yes
 
 ============================================================================
 	  
