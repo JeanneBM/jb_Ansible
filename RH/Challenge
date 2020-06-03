@@ -322,24 +322,24 @@ site.yml
   
   tasks:
   - name: install epel repo 
-	yum: name=epel-release state=present
+    yum: name=epel-release state=present
 	
   - name: install python bindings for SELinux
-	yum: name={{item}} state=present
-	with_items:
-	- libselinux-python
-	- libsemanage-python
+    yum: name={{item}} state=present
+    with_items:
+    - libselinux-python
+    - libsemanage-python
 	
   - name: test to see if SELinux is running
-	command: getenforce
-	register: sestatus
-	changed_when: false
+    command: getenforce
+    register: sestatus
+    changed_when: false
 	
   - name: install apache
-	yum: name=httpd state=present
+    yum: name=httpd state=present
 	
   - name: start apache
-	service: name=httpd state=started enabled=yes
+    service: name=httpd state=started enabled=yes
 
 
 cat site.yml
