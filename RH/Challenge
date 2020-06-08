@@ -516,23 +516,6 @@ Server list: <br>
 
 - name: start ntp
   service: name=ntpd state=started
-	
-____________________________________________________________________________
-
-Template ntp.conf.j2:
-
-driftfile /var/lib/ntp/driftfile
-
-restrict 127.0.0.1
-restrict -6 ::1
-
-server {{ ntpserver }} 
-
-includefile /etc/ntp/crypto/pw
-
-keys /etc/ntp/keys
-
-____________________________________________________________________________
 
 ============================================================================
 
@@ -552,7 +535,22 @@ ____________________________________________________________________________
 
 ============================================================================
 
-#9 site.yml
+#8 ntp.conf.j2
+
+driftfile /var/lib/ntp/driftfile
+
+restrict 127.0.0.1
+restrict -6 ::1
+
+server {{ ntpserver }} 
+
+includefile /etc/ntp/crypto/pw
+
+keys /etc/ntp/keys
+
+============================================================================
+
+#10 site.yml
 	
 ---
 - name: install and start apache
