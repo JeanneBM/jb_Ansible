@@ -423,17 +423,18 @@ lamp_haproxy
 	   defaults
 	   files
 	   handlers
-		  main.yml		#4
+  	     main.yml		#4
 	   meta
 	   tasks
-		  main.yml		#5
-		  ntp.yml		#6
-		  selinux.yml	#7
+	     main.yml		#5
+	     ntp.yml		#6
+	     selinux.yml	#7
 	   templates
+	     ntp.conf.j2:
 	   tests
 	   vars
-	      .travis.yml	#8
-		  README.md
+	     .travis.yml	#8
+	     README.md
 	hosts
 	LICENSE.md
 	README.md
