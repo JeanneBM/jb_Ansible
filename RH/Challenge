@@ -400,7 +400,7 @@ Przykladowy projekt z podzialem na packages
 FOLDERS
 lamp_haproxy
 	group_vars
-		all				#1
+		all			#1
 		dbservers		
 		ibservers
 		webservers
@@ -414,7 +414,7 @@ lamp_haproxy
 		  main.yml		#2
 		templates
 		  httpd.conf.j2
-		  index.html.j2    #3
+		  index.html.j2    	#3
 		tests
 		vars
 		  .travis.yml
@@ -423,22 +423,22 @@ lamp_haproxy
 	   defaults
 	   files
 	   handlers
-  	     main.yml		#4
+  	     main.yml			#4
 	   meta
 	   tasks
-	     main.yml		#5
-	     ntp.yml		#6
-	     selinux.yml	#7
+	     main.yml			#5
+	     ntp.yml			#6
+	     selinux.yml		#7
 	   templates
-	     ntp.conf.j2:
+	     ntp.conf.j2		#8
 	   tests
 	   vars
-	     .travis.yml	#8
+	     .travis.yml		#9
 	     README.md
 	hosts
 	LICENSE.md
 	README.md
-	site.yml		#9
+	site.yml			#10
 
 ============================================================================
 
